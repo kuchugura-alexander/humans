@@ -5,7 +5,8 @@ from django.contrib import admin
 from .models import Human, Gender, \
     City, Country, TimeZoneResidence, \
     LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge, \
-    LanguageProgramming, FrameworkProgramming
+    LanguageProgramming, FrameworkProgramming, \
+    SkillsProgramming, IntervalWorks
 
 
 class HumanAdmin(admin.ModelAdmin):
@@ -78,6 +79,20 @@ class LanguageProgrammingAdmin(admin.ModelAdmin):
     # list_filter=['date']
 
 
+class SkillsProgrammingAdmin(admin.ModelAdmin):
+    model = LanguageProgramming
+    list_display = ['title']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class IntervalWorksAdmin(admin.ModelAdmin):
+    model = LanguageProgramming
+    list_display = ['title', 'timeFrom', 'timeTo']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
 admin.site.register(Human, HumanAdmin)
 admin.site.register(Gender, GenderAdmin)
 admin.site.register(City, CityAdmin)
@@ -88,5 +103,7 @@ admin.site.register(LevelLanguageTitle, LevelLanguageTitleAdmin)
 admin.site.register(LevelLanguageKnowledge, LevelLanguageKnowledgeAdmin)
 admin.site.register(FrameworkProgramming, LanguageProgrammingAdmin)
 admin.site.register(LanguageProgramming, FrameworkProgrammingAdmin)
+admin.site.register(SkillsProgramming, SkillsProgrammingAdmin)
+admin.site.register(IntervalWorks, IntervalWorksAdmin)
 
 

@@ -45,6 +45,12 @@ class Human(AbsModel):
     framework_programming = models.ManyToManyField('FrameworkProgramming',
                                                    related_name='humans', related_query_name='human',
                                                    blank=False, verbose_name="Frameworks:", help_text="ФрэймВорки.")
+    skills_programming = models.ManyToManyField('SkillsProgramming',
+                                                related_name='humans', related_query_name='human',
+                                                blank=False, verbose_name="Skills:", help_text="Навыки.")
+    interval_works = models.ManyToManyField('IntervalWorks',
+                                            related_name='humans', related_query_name='human',
+                                            blank=False, verbose_name="Intervals:", help_text="Интервалы.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)
@@ -213,3 +219,39 @@ class LanguageProgramming(AbsModel):
     class Meta:
         verbose_name = "Язык программиирование"
         verbose_name_plural = "Языки программирования"
+
+
+class SkillsProgramming(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Skills:", help_text="Навыки и умения.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0}".format(self.title)
+
+    class Meta:
+        verbose_name = "Дополнительный навык"
+        verbose_name_plural = "Дополнительный навыки"
+
+
+####################################################################################
+
+
+class IntervalWorks(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=True, verbose_name="Interval:", help_text="Интервал.")
+    timeFrom = models.IntegerField(default=8,
+                                   blank=False, verbose_name="Start:", help_text="Начало работы.")
+    timeTo = models.IntegerField(default=17,
+                                 blank=False, verbose_name="Stop:", help_text="Завершение работы.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} ({1} - {2})".format(self.title, self.timeFrom, self.timeTo)
+
+    class Meta:
+        verbose_name = "Время работы"
+        verbose_name_plural = "Времена работы"
+
