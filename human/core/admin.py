@@ -2,7 +2,9 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Human, Gender
+from .models import Human, Gender, \
+    City, Country, TimeZoneResidence, \
+    LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge
 
 
 class HumanAdmin(admin.ModelAdmin):
@@ -12,9 +14,6 @@ class HumanAdmin(admin.ModelAdmin):
     # list_filter=['date']
 
 
-admin.site.register(Human, HumanAdmin)
-
-
 class GenderAdmin(admin.ModelAdmin):
     model = Gender
     list_display = ['gender', 'description']
@@ -22,4 +21,55 @@ class GenderAdmin(admin.ModelAdmin):
     # list_filter=['date']
 
 
+class CityAdmin(admin.ModelAdmin):
+    model = City
+    list_display = ['title', 'country', 'timezone']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class CountryAdmin(admin.ModelAdmin):
+    model = Country
+    list_display = ['domen', 'title', 'description']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class TimeZoneResidenceAdmin(admin.ModelAdmin):
+    model = TimeZoneResidence
+    list_display = ['timezone', 'hours', 'description']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class LevelLanguageAdmin(admin.ModelAdmin):
+    model = LevelLanguage
+    list_display = ['level', 'description']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class LevelLanguageTitleAdmin(admin.ModelAdmin):
+    model = LevelLanguageTitle
+    list_display = ['suffix', 'title']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class LevelLanguageKnowledgeAdmin(admin.ModelAdmin):
+    model = LevelLanguageTitle
+    list_display = ['title']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+admin.site.register(Human, HumanAdmin)
 admin.site.register(Gender, GenderAdmin)
+admin.site.register(City, CityAdmin)
+admin.site.register(Country, CountryAdmin)
+admin.site.register(TimeZoneResidence, TimeZoneResidenceAdmin)
+admin.site.register(LevelLanguage, LevelLanguageAdmin)
+admin.site.register(LevelLanguageTitle, LevelLanguageTitleAdmin)
+admin.site.register(LevelLanguageKnowledge, LevelLanguageKnowledgeAdmin)
+
+

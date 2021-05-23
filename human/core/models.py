@@ -19,7 +19,7 @@ class Human(AbsModel):
     email = models.EmailField(max_length=200, default="",
                               blank=True, verbose_name="E-mail:", help_text="E-mail главный.")
     email_first = models.EmailField(max_length=200, default="",
-                                    blank=True, verbose_name="E-mail first:", help_text="E-mail дополнительный 1.")
+                                    blank=True, verbose_name="E-mail first:", help_text="E-mail дополнительный 1 (*@hubbiton.info).")
     email_second = models.EmailField(max_length=200, default="",
                                      blank=True, verbose_name="E-mail second:", help_text="E-mail дополнительный 2.")
     email_third = models.EmailField(max_length=200, default="",
@@ -31,10 +31,14 @@ class Human(AbsModel):
     middle_name = models.CharField(max_length=200, default="",
                                    blank=True, verbose_name="Middle name:", help_text="Отчество.")
     gender = models.ForeignKey('Gender', on_delete=models.PROTECT, null=True,
-                               related_name='humans_gender', related_query_name='human_gender',
-                               blank=True, verbose_name="Gender:", help_text="Пол.")
-    # description = models.('Gender', on_delete=models.PROTECT, null=True, related_name='human_gender',
-    #                            blank=True, verbose_name="Gender:", help_text="Пол.")
+                               related_name='humans', related_query_name='human',
+                               blank=False, verbose_name="Gender:", help_text="Пол.")
+    city = models.ForeignKey('City', on_delete=models.PROTECT, null=True,
+                             related_name='humans', related_query_name='human',
+                             blank=False, verbose_name="City:", help_text="Город.")
+    level_english = models.ForeignKey('LevelLanguage', on_delete=models.PROTECT, null=True,
+                                      related_name='humans', related_query_name='human',
+                                      blank=False, verbose_name="Level English:", help_text="Уровень Английского.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)
@@ -43,13 +47,6 @@ class Human(AbsModel):
         verbose_name = "Человек"
         verbose_name_plural = "Человеки"
 
-
-# class City(models.Model):
-#     pub_date = models.DateTimeField(auto_now_add=True,
-#                                     blank=False, verbose_name="Date Published:", help_text="Дата создания записи.")
-#     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-#     choice_text = models.CharField(max_length=200)
-#     votes = models.IntegerField(default=0)
 
 class Gender(AbsModel):
     gender = models.CharField(max_length=100, default="",
@@ -63,4 +60,110 @@ class Gender(AbsModel):
     class Meta:
         verbose_name = "Пол"
         verbose_name_plural = "Полы"
+
+
+class City(AbsModel):
+    title = models.CharField(max_length=50, default="",
+                             blank=False, verbose_name="City:", help_text="Город.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+    country = models.ForeignKey('Country', on_delete=models.PROTECT, null=True,
+                                related_name='cities', related_query_name='city',
+                                blank=True, verbose_name="Country:", help_text="Страна.")
+    timezone = models.ForeignKey('TimeZoneResidence', on_delete=models.PROTECT, null=True,
+                                 related_name='cities', related_query_name='city',
+                                 blank=True, verbose_name="Time Zone:", help_text="Временная зона.")
+
+    def __str__(self):
+        return "{0} {1} ({2})".format(self.title, self.country, self.timezone)
+
+    class Meta:
+        verbose_name = "Город"
+        verbose_name_plural = "Города"
+
+
+class Country(AbsModel):
+    domen = models.CharField(max_length=5, default="",
+                             blank=False, verbose_name="Domen:", help_text="Домен.")
+    title = models.CharField(max_length=50, default="",
+                             blank=False, verbose_name="Country:", help_text="Страна.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} - {1}".format(self.domen, self.title)
+
+    class Meta:
+        verbose_name = "Стран"
+        verbose_name_plural = "Страны"
+
+
+class TimeZoneResidence(AbsModel):
+    timezone = models.CharField(max_length=100, default="",
+                                blank=False, verbose_name="Time Zone:", help_text="Временная зона города.")
+    hours = models.IntegerField(default=0,
+                                blank=False, verbose_name="Time Zone Hours(+/-):", help_text="Час +/-.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} : {1}".format(self.timezone, self.hours)
+
+    class Meta:
+        verbose_name = "Тайм Зона"
+        verbose_name_plural = "Тайм Зоны"
+
+
+class LevelLanguage(AbsModel):
+    CHOICE_CEFR = (
+        ('CEFR',    'ДА - В системе'),
+        ('NO CEFR', 'НЕТ - Наша оценка'),
+    )
+    CEFR = models.CharField(max_length=100, default="", choices=CHOICE_CEFR,
+                            blank=False, verbose_name="CERF ??:", help_text="Уровень Мировой ил Наша интерпретация.")
+    level = models.ForeignKey('LevelLanguageTitle', on_delete=models.PROTECT, null=True,
+                              related_name='LevelLanguages', related_query_name='LevelLanguage',
+                              blank=False, verbose_name="Level:", help_text="Уровень.")
+    knowledge = models.ForeignKey('LevelLanguageKnowledge', on_delete=models.PROTECT, null=True,
+                                  related_name='LevelLanguages', related_query_name='LevelLanguage',
+                                  blank=False, verbose_name="Knowledge:", help_text="Знание.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} ({1})".format(self.level, self.knowledge)
+
+    class Meta:
+        verbose_name = "Уровень языка"
+        verbose_name_plural = "Уровни языков"
+
+
+class LevelLanguageTitle(AbsModel):
+    suffix = models.CharField(max_length=2, default="",
+                              blank=True, verbose_name="Suffix:", help_text="Суффикс.")
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Title:", help_text="Название.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} - {1}".format(self.suffix, self.title)
+
+    class Meta:
+        verbose_name = "Название уровеня языка"
+        verbose_name_plural = "Названия уровней языков"
+
+
+class LevelLanguageKnowledge(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Knowledge:", help_text="Знание.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0}".format(self.title)
+
+    class Meta:
+        verbose_name = "Знание уровеня языка"
+        verbose_name_plural = "Знание уровней языков"
 
