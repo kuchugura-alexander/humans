@@ -1,11 +1,14 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-import datetime
+# from django.utils import timezone
 
 
 class AbsModel(models.Model):
-    pub_date = models.DateTimeField(auto_now_add=True,
-                                    blank=False, verbose_name="Date Published:", help_text="Дата создания записи.")
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      blank=False, verbose_name="Date Published:", help_text="Дата создания записи.")
+
+    modified_at = models.DateField(auto_now=True,
+                                   blank=False, verbose_name="Date last change:", help_text="Дата последнего изменения данных.")
 
     class Meta:
         abstract = True
