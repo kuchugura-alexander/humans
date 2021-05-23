@@ -7,7 +7,7 @@ from .models import Human, Gender
 
 class HumanAdmin(admin.ModelAdmin):
     model = Human
-    list_display = ['nickname', 'surname', 'name', 'middle_name', 'email']
+    list_display = ['nickname', 'surname', 'name', 'middle_name', 'email', 'phone']
     readonly_fields = ['pub_date']
     # list_filter=['date']
 

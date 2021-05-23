@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 import datetime
 
 
@@ -13,6 +14,8 @@ class AbsModel(models.Model):
 class Human(AbsModel):
     nickname = models.CharField(max_length=200, default="",
                                 blank=True, verbose_name="Nickname:", help_text="Псевдоним.")
+    phone = PhoneNumberField(default="",
+                             blank=True, verbose_name="Phone:", help_text="Номер телефона.")
     email = models.EmailField(max_length=200, default="",
                               blank=True, verbose_name="E-mail:", help_text="E-mail главный.")
     email_first = models.EmailField(max_length=200, default="",
