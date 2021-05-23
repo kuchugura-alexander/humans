@@ -39,6 +39,12 @@ class Human(AbsModel):
     level_english = models.ForeignKey('LevelLanguage', on_delete=models.PROTECT, null=True,
                                       related_name='humans', related_query_name='human',
                                       blank=False, verbose_name="Level English:", help_text="Уровень Английского.")
+    language_programming = models.ManyToManyField('LanguageProgramming',
+                                                  related_name='humans', related_query_name='human',
+                                                  blank=False, verbose_name="Languages:", help_text="Языки.")
+    framework_programming = models.ManyToManyField('FrameworkProgramming',
+                                                   related_name='humans', related_query_name='human',
+                                                   blank=False, verbose_name="Frameworks:", help_text="ФрэймВорки.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)
@@ -46,6 +52,8 @@ class Human(AbsModel):
     class Meta:
         verbose_name = "Человек"
         verbose_name_plural = "Человеки"
+
+####################################################################################
 
 
 class Gender(AbsModel):
@@ -60,6 +68,9 @@ class Gender(AbsModel):
     class Meta:
         verbose_name = "Пол"
         verbose_name_plural = "Полы"
+
+
+####################################################################################
 
 
 class City(AbsModel):
@@ -112,6 +123,9 @@ class TimeZoneResidence(AbsModel):
     class Meta:
         verbose_name = "Тайм Зона"
         verbose_name_plural = "Тайм Зоны"
+
+
+####################################################################################
 
 
 class LevelLanguage(AbsModel):
@@ -167,3 +181,35 @@ class LevelLanguageKnowledge(AbsModel):
         verbose_name = "Знание уровеня языка"
         verbose_name_plural = "Знание уровней языков"
 
+####################################################################################
+
+
+class FrameworkProgramming(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Framework:", help_text="Язык программирвоания.")
+    language = models.ForeignKey('LanguageProgramming', on_delete=models.PROTECT, null=True,
+                                 related_name='FrameworkProgrammings', related_query_name='FrameworkProgramming',
+                                 blank=False, verbose_name="Language:", help_text="Язык.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} ({1})".format(self.title, self.language)
+
+    class Meta:
+        verbose_name = "ФрэймВорк"
+        verbose_name_plural = "ФрэймВорки"
+
+
+class LanguageProgramming(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Language:", help_text="Язык программирвоания.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0}".format(self.title)
+
+    class Meta:
+        verbose_name = "Язык программиирование"
+        verbose_name_plural = "Языки программирования"

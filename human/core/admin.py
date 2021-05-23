@@ -4,7 +4,8 @@ from django.contrib import admin
 
 from .models import Human, Gender, \
     City, Country, TimeZoneResidence, \
-    LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge
+    LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge, \
+    LanguageProgramming, FrameworkProgramming
 
 
 class HumanAdmin(admin.ModelAdmin):
@@ -63,6 +64,20 @@ class LevelLanguageKnowledgeAdmin(admin.ModelAdmin):
     # list_filter=['date']
 
 
+class FrameworkProgrammingAdmin(admin.ModelAdmin):
+    model = FrameworkProgramming
+    list_display = ['title']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class LanguageProgrammingAdmin(admin.ModelAdmin):
+    model = LanguageProgramming
+    list_display = ['title', 'language']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
 admin.site.register(Human, HumanAdmin)
 admin.site.register(Gender, GenderAdmin)
 admin.site.register(City, CityAdmin)
@@ -71,5 +86,7 @@ admin.site.register(TimeZoneResidence, TimeZoneResidenceAdmin)
 admin.site.register(LevelLanguage, LevelLanguageAdmin)
 admin.site.register(LevelLanguageTitle, LevelLanguageTitleAdmin)
 admin.site.register(LevelLanguageKnowledge, LevelLanguageKnowledgeAdmin)
+admin.site.register(FrameworkProgramming, LanguageProgrammingAdmin)
+admin.site.register(LanguageProgramming, FrameworkProgrammingAdmin)
 
 
