@@ -6,7 +6,7 @@ from .models import Human, Gender, \
     City, Country, TimeZoneResidence, \
     LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge, \
     LanguageProgramming, FrameworkProgramming, \
-    SkillsProgramming, IntervalWorks
+    SkillProgramming, IntervalWork, RateWork
 
 
 class HumanAdmin(admin.ModelAdmin):
@@ -79,16 +79,23 @@ class LanguageProgrammingAdmin(admin.ModelAdmin):
     # list_filter=['date']
 
 
-class SkillsProgrammingAdmin(admin.ModelAdmin):
-    model = LanguageProgramming
+class SkillProgrammingAdmin(admin.ModelAdmin):
+    model = SkillProgramming
     list_display = ['title']
     readonly_fields = ['pub_date']
     # list_filter=['date']
 
 
-class IntervalWorksAdmin(admin.ModelAdmin):
-    model = LanguageProgramming
+class IntervalWorkAdmin(admin.ModelAdmin):
+    model = IntervalWork
     list_display = ['title', 'timeFrom', 'timeTo']
+    readonly_fields = ['pub_date']
+    # list_filter=['date']
+
+
+class RateWorkAdmin(admin.ModelAdmin):
+    model = RateWork
+    list_display = ['title', 'language', 'framework', 'price_dollar', 'price_rub']
     readonly_fields = ['pub_date']
     # list_filter=['date']
 
@@ -103,7 +110,8 @@ admin.site.register(LevelLanguageTitle, LevelLanguageTitleAdmin)
 admin.site.register(LevelLanguageKnowledge, LevelLanguageKnowledgeAdmin)
 admin.site.register(FrameworkProgramming, LanguageProgrammingAdmin)
 admin.site.register(LanguageProgramming, FrameworkProgrammingAdmin)
-admin.site.register(SkillsProgramming, SkillsProgrammingAdmin)
-admin.site.register(IntervalWorks, IntervalWorksAdmin)
+admin.site.register(SkillProgramming, SkillProgrammingAdmin)
+admin.site.register(IntervalWork, IntervalWorkAdmin)
+admin.site.register(RateWork, RateWorkAdmin)
 
 

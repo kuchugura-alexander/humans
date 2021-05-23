@@ -45,12 +45,15 @@ class Human(AbsModel):
     framework_programming = models.ManyToManyField('FrameworkProgramming',
                                                    related_name='humans', related_query_name='human',
                                                    blank=False, verbose_name="Frameworks:", help_text="ФрэймВорки.")
-    skills_programming = models.ManyToManyField('SkillsProgramming',
+    skills_programming = models.ManyToManyField('SkillProgramming',
                                                 related_name='humans', related_query_name='human',
                                                 blank=False, verbose_name="Skills:", help_text="Навыки.")
-    interval_works = models.ManyToManyField('IntervalWorks',
+    interval_works = models.ManyToManyField('IntervalWork',
                                             related_name='humans', related_query_name='human',
                                             blank=False, verbose_name="Intervals:", help_text="Интервалы.")
+    rate_works = models.ManyToManyField('RateWork',
+                                        related_name='humans', related_query_name='human',
+                                        blank=True, verbose_name="Price:", help_text="Цена.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)
@@ -92,7 +95,7 @@ class City(AbsModel):
                                  blank=True, verbose_name="Time Zone:", help_text="Временная зона.")
 
     def __str__(self):
-        return "{0} {1} ({2})".format(self.title, self.country, self.timezone)
+        return "{0} - {1} ({2})".format(self.country, self.title, self.timezone)
 
     class Meta:
         verbose_name = "Город"
@@ -221,7 +224,7 @@ class LanguageProgramming(AbsModel):
         verbose_name_plural = "Языки программирования"
 
 
-class SkillsProgramming(AbsModel):
+class SkillProgramming(AbsModel):
     title = models.CharField(max_length=100, default="",
                              blank=False, verbose_name="Skills:", help_text="Навыки и умения.")
     description = models.TextField(max_length=400, default="",
@@ -238,7 +241,7 @@ class SkillsProgramming(AbsModel):
 ####################################################################################
 
 
-class IntervalWorks(AbsModel):
+class IntervalWork(AbsModel):
     title = models.CharField(max_length=100, default="",
                              blank=True, verbose_name="Interval:", help_text="Интервал.")
     timeFrom = models.IntegerField(default=8,
@@ -254,4 +257,29 @@ class IntervalWorks(AbsModel):
     class Meta:
         verbose_name = "Время работы"
         verbose_name_plural = "Времена работы"
+
+
+class RateWork(AbsModel):
+    title = models.CharField(max_length=100, default="",
+                             blank=True, verbose_name="Title:", help_text="Название.")
+    language = models.ForeignKey('LanguageProgramming', on_delete=models.PROTECT, null=True,
+                                 related_name='RateWorks', related_query_name='RateWork',
+                                 blank=True, verbose_name="Language:", help_text="Язык.")
+    framework = models.ForeignKey('FrameworkProgramming', on_delete=models.PROTECT, null=True,
+                                  related_name='RateWorks', related_query_name='RateWork',
+                                  blank=True, verbose_name="Framework:", help_text="ФрэймВорк.")
+    price_dollar = models.IntegerField(default=20,
+                                       blank=False, verbose_name="Price (USA dollar):", help_text="Цена (в долларах).")
+    price_rub = models.IntegerField(default=0,
+                                    blank=True, verbose_name="Price (RUB):", help_text="Цена (в рублях).")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
+
+    def __str__(self):
+        return "{0} : {1}<->{2} (${3} - RUB{4})".format(self.title, self.language, self.framework,
+                                           self.price_dollar, self.price_rub)
+
+    class Meta:
+        verbose_name = "Цена работы"
+        verbose_name_plural = "Цены работ"
 
