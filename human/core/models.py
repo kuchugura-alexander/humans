@@ -1,20 +1,25 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-# from django.utils import timezone
 
 
 class AbsModel(models.Model):
+    """
+    Abstract model for all classes.
+    """
     created_at = models.DateTimeField(auto_now_add=True,
                                       blank=False, verbose_name="Date Published:", help_text="Дата создания записи.")
 
     modified_at = models.DateField(auto_now=True,
-                                   blank=False, verbose_name="Date last change:", help_text="Дата последнего изменения данных.")
+                                   blank=False, verbose_name="Date Modify:", help_text="Дата последнего изменения.")
 
     class Meta:
         abstract = True
 
 
 class Human(AbsModel):
+    """
+    Main models about human.
+    """
     nickname = models.CharField(max_length=200, default="",
                                 blank=True, verbose_name="Nickname:", help_text="Псевдоним.")
     phone = PhoneNumberField(default="",
@@ -69,6 +74,9 @@ class Human(AbsModel):
 
 
 class Gender(AbsModel):
+    """
+    Gender: male, female and others.
+    """
     gender = models.CharField(max_length=100, default="",
                               blank=False, verbose_name="Gender:", help_text="Пол.")
     description = models.TextField(max_length=400, default="",
@@ -86,6 +94,9 @@ class Gender(AbsModel):
 
 
 class City(AbsModel):
+    """
+    Current city. (with Country and TimeZone)
+    """
     title = models.CharField(max_length=50, default="",
                              blank=False, verbose_name="City:", help_text="Город.")
     description = models.TextField(max_length=400, default="",
@@ -106,6 +117,9 @@ class City(AbsModel):
 
 
 class Country(AbsModel):
+    """
+    Current country. (with TimeZone and Domen)
+    """
     domen = models.CharField(max_length=5, default="",
                              blank=False, verbose_name="Domen:", help_text="Домен.")
     title = models.CharField(max_length=50, default="",
@@ -122,6 +136,9 @@ class Country(AbsModel):
 
 
 class TimeZoneResidence(AbsModel):
+    """
+    Time zone for binding to city.
+    """
     timezone = models.CharField(max_length=100, default="",
                                 blank=False, verbose_name="Time Zone:", help_text="Временная зона города.")
     hours = models.IntegerField(default=0,
@@ -130,7 +147,10 @@ class TimeZoneResidence(AbsModel):
                                    blank=True, verbose_name="Description:", help_text="Описание.")
 
     def __str__(self):
-        return "{0} : {1}".format(self.timezone, self.hours)
+        if self.hours > 0:
+            return "{0} : +{1}".format(self.timezone, self.hours)
+        else:
+            return "{0} : {1}".format(self.timezone, self.hours)
 
     class Meta:
         verbose_name = "Тайм Зона"
@@ -141,6 +161,9 @@ class TimeZoneResidence(AbsModel):
 
 
 class LevelLanguage(AbsModel):
+    """
+    Level Language: Into CERF system, LevelLanguageTitle, LevelLanguageKnowledge.
+    """
     CHOICE_CEFR = (
         ('CEFR',    'ДА - В системе'),
         ('NO CEFR', 'НЕТ - Наша оценка'),
@@ -165,6 +188,9 @@ class LevelLanguage(AbsModel):
 
 
 class LevelLanguageTitle(AbsModel):
+    """
+    Title Level Language: A1, B2 and others.
+    """
     suffix = models.CharField(max_length=2, default="",
                               blank=True, verbose_name="Suffix:", help_text="Суффикс.")
     title = models.CharField(max_length=100, default="",
@@ -181,6 +207,9 @@ class LevelLanguageTitle(AbsModel):
 
 
 class LevelLanguageKnowledge(AbsModel):
+    """
+    Knowledge Level Language: BASIC, INDEPENDENT and others.
+    """
     title = models.CharField(max_length=100, default="",
                              blank=False, verbose_name="Knowledge:", help_text="Знание.")
     description = models.TextField(max_length=400, default="",
@@ -228,6 +257,9 @@ class LanguageProgramming(AbsModel):
 
 
 class SkillProgramming(AbsModel):
+    """
+    Skills.
+    """
     title = models.CharField(max_length=100, default="",
                              blank=False, verbose_name="Skills:", help_text="Навыки и умения.")
     description = models.TextField(max_length=400, default="",
