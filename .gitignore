@@ -166,3 +166,5 @@ data/dat/.DS_Store
 
 
 static/
+migrations/0*.py
+db.sqlite3
