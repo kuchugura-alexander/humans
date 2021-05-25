@@ -1,5 +1,11 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+
+
+class CustomUser(AbstractUser):
+    pass
+    # fav_color = models.CharField(blank=True, max_length=120)
 
 
 class AbsModel(models.Model):

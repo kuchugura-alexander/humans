@@ -10,6 +10,7 @@ phonenumbers = "*"
 djangorestframework = "*"
 coreapi = "*"
 pygments = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

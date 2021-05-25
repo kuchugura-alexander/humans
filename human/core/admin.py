@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-
-from .models import Human, Gender, \
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import CustomUser,\
+    Human, Gender, \
     City, Country, TimeZoneResidence, \
     LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge, \
     LanguageProgramming, FrameworkProgramming, \
@@ -115,3 +116,11 @@ admin.site.register(IntervalWork, IntervalWorkAdmin)
 admin.site.register(RateWork, RateWorkAdmin)
 
 
+class CustomUserAdmin(admin.ModelAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = ['email', 'username', ]
+
+
+admin.site.register(CustomUser, CustomUserAdmin)
