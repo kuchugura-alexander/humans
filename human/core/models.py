@@ -1,11 +1,5 @@
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
-
-class CustomUser(AbstractUser):
-    pass
-    # fav_color = models.CharField(blank=True, max_length=120)
 
 
 class AbsModel(models.Model):
@@ -28,11 +22,11 @@ class Human(AbsModel):
     """
     nickname = models.CharField(max_length=200, default="",
                                 blank=True, verbose_name="Nickname:", help_text="Псевдоним.")
-    phone = PhoneNumberField(default="",
+    phone = PhoneNumberField(default="",  unique=True,
                              blank=True, verbose_name="Phone:", help_text="Номер телефона.")
-    email = models.EmailField(max_length=200, default="",
+    email = models.EmailField(max_length=200, default="", unique=True,
                               blank=True, verbose_name="E-mail:", help_text="E-mail главный.")
-    email_first = models.EmailField(max_length=200, default="",
+    email_first = models.EmailField(max_length=200, default="", unique=True,
                                     blank=True, verbose_name="E-mail first:", help_text="E-mail дополнительный 1 (*@hubbiton.info).")
     email_second = models.EmailField(max_length=200, default="",
                                      blank=True, verbose_name="E-mail second:", help_text="E-mail дополнительный 2.")
@@ -76,7 +70,7 @@ class Human(AbsModel):
         verbose_name = "Человек"
         verbose_name_plural = "Человеки"
         ordering = ('modified_at', )
-        unique_together = ['phone', 'email', 'email_first']
+        # unique_together = ['phone', 'email', 'email_first']
 
 ####################################################################################
 
