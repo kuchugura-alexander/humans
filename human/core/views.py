@@ -10,7 +10,9 @@ from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from .models import Human
 from rest_framework import status
-
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 def test(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -36,16 +38,14 @@ from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
 
-@api_view(['GET'])
-@csrf_exempt
-def humans_list(request):
+class HumansList(APIView):
     """
     List all humans.
     """
-    if request.method == "GET":
+    def get(self, request, format=None):
         humans = Human.objects.all()
         serializer = HumanSerializer(humans, many=True)
-        return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
+        return Response(serializer.data)
     # elif request.method == "POST":
     #     data = JSONParser().parse(request)
     #     serializer = HumanSerializer(data=data)
@@ -55,29 +55,42 @@ def humans_list(request):
     #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST', 'PATCH', 'DELETE'])
-@csrf_exempt
-def human_detail(request, pk):
+class HumanDetail(APIView):
     """
     Retrieve, update or delete a Human.
     """
-    try:
-        human = Human.objects.get(pk=pk)
-    except Human.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+    def get_object(self, pk):
+        """
+        Prepare before launch methods of the class.
+        """
+        try:
+            return Human.objects.get(pk=pk)
+        except Human.DoesNotExist:
+            return Http404
 
-    if request.method == 'GET':
+    def get(self, request, pk, format=None):
+        """
+        Retrieve.
+        """
+        human = self.get_object(pk)
         serializer = HumanSerializer(human)
-        return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
+        return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = HumanSerializer(human, data=data)
+    def put(self, request, pk, format=None):
+        """
+        Create and Update.
+        """
+        human = self.get_object(pk)
+        serializer = HumanSerializer(human, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+    def delete(self, request, pk, format=None):
+        """
+        Delete.
+        """
+        human = self.get_object(pk)
         human.delete()
-        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
