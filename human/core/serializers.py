@@ -104,18 +104,15 @@ class HumanSerializer(serializers.HyperlinkedModelSerializer):
     gender = GenderSerializer()
     city = CitySerializer()
     level_english = LevelLanguageSerializer()
-    language_programming = LanguageProgrammingSerializer()
-    # language_programming = "qweqwe" # GenderSerializer()
-    # framework_programming = FrameworkProgrammingSerializer()
-    framework_programming = "qweqwe" # GenderSerializer()
-    skills_programming = SkillProgrammingSerializer()
-    interval_works = IntervalWorkSerializer()
-    # rate_works = RateWorkSerializer()
-    rate_works = "qweqwe" # GenderSerializer()
+    language_programming = LanguageProgrammingSerializer(read_only=True, many=True)
+    framework_programming = FrameworkProgrammingSerializer(read_only=True, many=True)
+    skills_programming = SkillProgrammingSerializer(read_only=True, many=True)
+    interval_works = IntervalWorkSerializer(read_only=True, many=True)
+    rate_works = RateWorkSerializer(read_only=True, many=True)
 
     class Meta:
         model = Human
         fields = ['nickname', 'phone', 'email', 'email_first', 'email_second', 'email_third',
-                  'surname', 'name', 'middle_name', 'gender', 'city', 'level_english',]
-                  # 'language_programming', 'framework_programming', 'skills_programming',
-                  # 'interval_works', 'rate_works', ]
+                  'surname', 'name', 'middle_name', 'gender', 'city', 'level_english',
+                  'language_programming', 'framework_programming', 'skills_programming',
+                  'interval_works', 'rate_works', ]

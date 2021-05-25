@@ -6,8 +6,10 @@
 from .serializers import HumanSerializer  # UserSerializer, GroupSerializer
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from .models import Human
+from rest_framework import status
 
 
 def test(request):
@@ -33,32 +35,27 @@ def test(request):
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
+
+@api_view(['GET'])
 @csrf_exempt
 def humans_list(request):
     """
     List all humans.
     """
     if request.method == "GET":
-        factory = APIRequestFactory()
-        request = factory.get('/')
-
-        serializer_context = {
-            'request': Request(request),
-        }
-
         humans = Human.objects.all()
-        serializer = HumanSerializer(humans, many=True, context=serializer_context)
-        return JsonResponse(serializer.data, safe=False
-                            , json_dumps_params={'ensure_ascii': False})
+        serializer = HumanSerializer(humans, many=True)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
     # elif request.method == "POST":
     #     data = JSONParser().parse(request)
     #     serializer = HumanSerializer(data=data)
     #     if serializer.is_valid():
     #         serializer.save()
-    #         return JsonResponse(serializer.data, status=201)
-    #     return JsonResponse(serializer.errors, status=400)
+    #         return JsonResponse(serializer.data, status.HTTP_201_CREATED)
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET', 'POST', 'PATCH', 'DELETE'])
 @csrf_exempt
 def human_detail(request, pk):
     """
@@ -67,20 +64,20 @@ def human_detail(request, pk):
     try:
         human = Human.objects.get(pk=pk)
     except Human.DoesNotExist:
-        return HttpResponse(status=404)
+        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         serializer = HumanSerializer(human)
-        return JsonResponse(serializer.data)
+        return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
         serializer = HumanSerializer(human, data=data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
+            return JsonResponse(serializer.data, safe=False, json_dumps_params={'ensure_ascii': False})
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
         human.delete()
-        return HttpResponse(status=204)
+        return HttpResponse(status=status.HTTP_204_NO_CONTENT)
