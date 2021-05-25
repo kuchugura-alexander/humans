@@ -68,6 +68,8 @@ class Human(AbsModel):
     rate_works = models.ManyToManyField('RateWork',
                                         related_name='humans', related_query_name='human',
                                         blank=True, verbose_name="Price:", help_text="Цена.")
+    description = models.TextField(max_length=400, default="",
+                                   blank=True, verbose_name="Description:", help_text="Описание.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)

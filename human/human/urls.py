@@ -27,7 +27,7 @@ API_DESCRIPTION = 'A Web API for creating and viewing highlighted code humans.'
 schema_view = get_schema_view(title=API_TITLE)
 
 urlpatterns = [
-    path('', include('core.urls')),
+    path('api/', include('core.urls')),
     # url(r'^', include('core.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^schema/$', schema_view),
