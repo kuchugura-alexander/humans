@@ -69,6 +69,8 @@ class Human(AbsModel):
     class Meta:
         verbose_name = "Человек"
         verbose_name_plural = "Человеки"
+        ordering = ('modified_at', )
+        unique_together = ['phone', 'email', 'email_first']
 
 ####################################################################################
 
