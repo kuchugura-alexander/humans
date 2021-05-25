@@ -28,7 +28,7 @@ class Human(AbsModel):
     """
     nickname = models.CharField(max_length=200, default="",
                                 blank=True, verbose_name="Nickname:", help_text="Псевдоним.")
-    phone = PhoneNumberField(default="",  unique=True,
+    phone = PhoneNumberField(default="", unique=True,
                              blank=True, verbose_name="Phone:", help_text="Номер телефона.")
     email = models.EmailField(max_length=200, default="", unique=True,
                               blank=True, verbose_name="E-mail:", help_text="E-mail главный.")

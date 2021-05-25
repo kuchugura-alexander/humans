@@ -45,7 +45,7 @@ class TimeZoneResidenceAdmin(admin.ModelAdmin):
 
 class LevelLanguageAdmin(admin.ModelAdmin):
     model = LevelLanguage
-    list_display = ['level', 'description']
+    list_display = ['level', 'knowledge', 'description']
     readonly_fields = ['created_at', 'modified_at']
     # list_filter=['date']
 
