@@ -12,9 +12,16 @@ from .models import (
 
 
 class TokenAdmin(admin.ModelAdmin):
+    readonly_fields = []
+
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return ['created_at', 'modified_at']
+        else:
+            return ['created_at', 'modified_at', 'token']
+
     model = Token
     list_display = ['active', 'token']
-    readonly_fields = ['created_at', 'modified_at']
 
     def save_model(self, request, obj, form, change):
         if obj.token == "":
