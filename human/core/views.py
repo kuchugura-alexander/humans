@@ -96,8 +96,8 @@ class GenderViewSet(viewsets.ModelViewSet):
     # def list(self, request):
     #     pass
 
-    def create(self, request):
-        return HttpResponse("Hello, world.")
+    # def create(self, request):
+    #     return HttpResponse("Hello, world.")
         # pass
 
     # def retrieve(self, request, pk=None):

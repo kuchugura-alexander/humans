@@ -30,7 +30,6 @@ const Main = () => (
             {/*<Route path="/createHuman" exact component={HumansList} />*/}
             <Route path="/gender/" exact component={GenderList} />
             <Route path="/gender/:id" exact component={GenderDetail} />
-            {/*<Route path="/genderCreate">*/}
             {/*  <GenderCreate />*/}
             {/*</Route>*/}
           </Switch>

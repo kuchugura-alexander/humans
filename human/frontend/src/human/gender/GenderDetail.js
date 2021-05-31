@@ -15,13 +15,13 @@ function GenderDetail({match}){
   }, [id])
 // console.log(genders)
   return(
-      <div>
+    <div>
         <h1>Gender with ID: {genders.id}</h1>
         <h2>{genders.title}</h2>
         <p>
-          {genders.description}
+        {genders.description}
         </p>
-      </div>
+    </div>
   )
 }
 

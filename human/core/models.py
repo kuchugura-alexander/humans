@@ -108,7 +108,7 @@ class Gender(AbsModel):
     """
     Gender: male, female and others.
     """
-    title = models.CharField(max_length=100, default="",
+    title = models.CharField(max_length=100, default="", unique=True,
                              blank=False, verbose_name="Title:", help_text="Пол.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
