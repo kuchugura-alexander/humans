@@ -9,30 +9,30 @@ from .models import Human, Gender, City, Country, TimeZoneResidence, \
 # class UserSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
 #         model = User
-#         fields = ['url', 'username', 'email', 'groups']
+#         fields = ['pk', 'url', 'username', 'email', 'groups']
 #
 #
 # class GroupSerializer(serializers.HyperlinkedModelSerializer):
 #     class Meta:
 #         model = Group
-#         fields = ['url', 'name']
+#         fields = ['pk', 'url', 'name']
 
 class GenderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Gender
-        fields = ['gender', 'description', ]
+        fields = ['pk', 'title', 'description', ]
 
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Country
-        fields = ['domen', 'title', 'description', ]
+        fields = ['pk', 'domen', 'title', 'description', ]
 
 
 class TimeZoneResidenceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TimeZoneResidence
-        fields = ['timezone', 'hours', 'description', ]
+        fields = ['pk', 'timezone', 'hours', 'description', ]
 
 
 class CitySerializer(serializers.HyperlinkedModelSerializer):
@@ -41,19 +41,19 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = City
-        fields = ['title', 'description', 'country', 'timezone', ]
+        fields = ['pk', 'title', 'description', 'country', 'timezone', ]
 
 
 class LevelLanguageTitleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LevelLanguageTitle
-        fields = ['suffix', 'title', 'description', ]
+        fields = ['pk', 'suffix', 'title', 'description', ]
 
 
 class LevelLanguageKnowledgeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LevelLanguageKnowledge
-        fields = ['title', 'description', ]
+        fields = ['pk', 'title', 'description', ]
 
 
 class LevelLanguageSerializer(serializers.HyperlinkedModelSerializer):
@@ -62,13 +62,13 @@ class LevelLanguageSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = LevelLanguage
-        fields = ['CEFR', 'level', 'knowledge', 'description', ]
+        fields = ['pk', 'CEFR', 'level', 'knowledge', 'description', ]
 
 
 class LanguageProgrammingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = LanguageProgramming
-        fields = ['title', 'description', ]
+        fields = ['pk', 'title', 'description', ]
 
 
 class FrameworkProgrammingSerializer(serializers.HyperlinkedModelSerializer):
@@ -76,19 +76,19 @@ class FrameworkProgrammingSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = FrameworkProgramming
-        fields = ['title', 'language', 'description', ]
+        fields = ['pk', 'title', 'language', 'description', ]
 
 
 class SkillProgrammingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SkillProgramming
-        fields = ['title', 'description', ]
+        fields = ['pk', 'title', 'description', ]
 
 
 class IntervalWorkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = IntervalWork
-        fields = ['title', 'timeFrom', 'timeTo', 'description', ]
+        fields = ['pk', 'title', 'timeFrom', 'timeTo', 'description', ]
 
 
 class RateWorkSerializer(serializers.HyperlinkedModelSerializer):
@@ -97,9 +97,10 @@ class RateWorkSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = RateWork
-        fields = ['title', 'language', 'framework', 'price_dollar', 'price_rub', 'description', ]
+        fields = ['pk', 'title', 'language', 'framework', 'price_dollar', 'price_rub', 'description', ]
 
 
+# class HumanAllInfoSerializer(serializers.HyperlinkedModelSerializer):
 class HumanSerializer(serializers.HyperlinkedModelSerializer):
     gender = GenderSerializer()
     city = CitySerializer()
@@ -112,7 +113,32 @@ class HumanSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Human
-        fields = ['nickname', 'phone', 'email', 'email_first', 'email_second', 'email_third',
+        fields = ['pk', 'nickname', 'phone', 'email', 'email_first', 'email_second', 'email_third',
                   'surname', 'name', 'middle_name', 'gender', 'city', 'level_english',
                   'language_programming', 'framework_programming', 'skills_programming',
                   'interval_works', 'rate_works', ]
+
+
+# # class HumanMiniInfoSerializer(serializers.HyperlinkedModelSerializer):
+# class HumanSerializer(serializers.HyperlinkedModelSerializer):
+#     gender = GenderSerializer()
+#     city = CitySerializer()
+#     level_english = LevelLanguageSerializer()
+#     language_programming = LanguageProgrammingSerializer(read_only=True, many=True)
+#     framework_programming = FrameworkProgrammingSerializer(read_only=True, many=True)
+#     skills_programming = SkillProgrammingSerializer(read_only=True, many=True)
+#     interval_works = IntervalWorkSerializer(read_only=True, many=True)
+#     rate_works = RateWorkSerializer(read_only=True, many=True)
+#
+#     class Meta:
+#         model = Human
+#         fields = ['pk', 'pk', 'nickname', 'surname', 'name', 'middle_name', 'gender', 'city', 'level_english',
+#                   'language_programming', 'framework_programming', 'skills_programming',
+#                   'interval_works', 'rate_works', ]
+
+
+#
+# class HumanSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Human
+#         fields = "__all__"

@@ -166,3 +166,6 @@ data/dat/.DS_Store
 
 
 static/
+node_modules/
+human/node_modules/
+human/frontend/node_modules/

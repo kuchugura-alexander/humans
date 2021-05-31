@@ -22,6 +22,24 @@ class AbsModel(models.Model):
         abstract = True
 
 
+class Token(AbsModel):
+    """
+    Tokens for all operation.
+    """
+    token = models.CharField(max_length=33, default="", unique=True,
+                             blank=True, verbose_name="Token:", help_text="Токен.")
+    active = models.BooleanField(default=True,
+                                 verbose_name="Active:", help_text="Активность.")
+
+    def __str__(self):
+        return "{0}".format(self.token)
+
+    class Meta:
+        verbose_name = "Токен"
+        verbose_name_plural = "Токены"
+        ordering = ('modified_at', )
+
+
 class Human(AbsModel):
     """
     Main models about human.
@@ -33,11 +51,11 @@ class Human(AbsModel):
     email = models.EmailField(max_length=200, default="", unique=True,
                               blank=True, verbose_name="E-mail:", help_text="E-mail главный.")
     email_first = models.EmailField(max_length=200, default="", unique=True,
-                                    blank=True, verbose_name="E-mail first:", help_text="E-mail дополнительный 1 (*@hubbiton.info).")
+                                    blank=True, verbose_name="E-mail first:", help_text="E-mail #1 (*@hubbiton.info).")
     email_second = models.EmailField(max_length=200, default="",
-                                     blank=True, verbose_name="E-mail second:", help_text="E-mail дополнительный 2.")
+                                     blank=True, verbose_name="E-mail second:", help_text="E-mail #2.")
     email_third = models.EmailField(max_length=200, default="",
-                                    blank=True, verbose_name="E-mail third:", help_text="E-mail дополнительный 3.")
+                                    blank=True, verbose_name="E-mail third:", help_text="E-mail #3.")
     surname = models.CharField(max_length=200, default="",
                                blank=False, verbose_name="Surname:", help_text="Фамилия.")
     name = models.CharField(max_length=200, default="",
@@ -58,7 +76,7 @@ class Human(AbsModel):
                                                   blank=False, verbose_name="Languages:", help_text="Языки.")
     framework_programming = models.ManyToManyField('FrameworkProgramming',
                                                    related_name='humans', related_query_name='human',
-                                                   blank=False, verbose_name="Frameworks:", help_text="ФрэймВорки.")
+                                                   blank=True, verbose_name="Frameworks:", help_text="ФрэймВорки.")
     skills_programming = models.ManyToManyField('SkillProgramming',
                                                 related_name='humans', related_query_name='human',
                                                 blank=False, verbose_name="Skills:", help_text="Навыки.")
@@ -70,6 +88,9 @@ class Human(AbsModel):
                                         blank=True, verbose_name="Price:", help_text="Цена.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='humans', related_query_name='human',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} {1} - {2}".format(self.surname, self.name, self.email)
@@ -87,13 +108,16 @@ class Gender(AbsModel):
     """
     Gender: male, female and others.
     """
-    gender = models.CharField(max_length=100, default="",
-                              blank=False, verbose_name="Gender:", help_text="Пол.")
+    title = models.CharField(max_length=100, default="",
+                             blank=False, verbose_name="Title:", help_text="Пол.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='genders', related_query_name='gender',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
-        return "{0}".format(self.gender)
+        return "{0}".format(self.title)
 
     class Meta:
         verbose_name = "Пол"
@@ -117,6 +141,9 @@ class City(AbsModel):
     timezone = models.ForeignKey('TimeZoneResidence', on_delete=models.PROTECT, null=True,
                                  related_name='cities', related_query_name='city',
                                  blank=True, verbose_name="Time Zone:", help_text="Временная зона.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='cities', related_query_name='city',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} - {1} ({2})".format(self.country, self.title, self.timezone)
@@ -136,6 +163,9 @@ class Country(AbsModel):
                              blank=False, verbose_name="Country:", help_text="Страна.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='countries', related_query_name='country',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} - {1}".format(self.domen, self.title)
@@ -151,11 +181,19 @@ class TimeZoneResidence(AbsModel):
     """
     timezone = models.CharField(max_length=100, default="",
                                 blank=False, verbose_name="Time Zone:", help_text="Временная зона города.")
-    hours = models.IntegerField(default=0,
+    hours = models.IntegerField(default=0, db_column="hours",
                                 blank=False, verbose_name="Time Zone Hours(+/-):", help_text="Час +/-.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='time_zone_residences', related_query_name='time_zone_residence',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
+    # @property
+    # def hours(self):
+    #     return self._hours
+    #
+    # @hours.getter
     def __str__(self):
         if self.hours > 0:
             return "{0} : +{1}".format(self.timezone, self.hours)
@@ -188,6 +226,9 @@ class LevelLanguage(AbsModel):
                                   blank=False, verbose_name="Knowledge:", help_text="Знание.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='level_languages', related_query_name='level_language',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} ({1})".format(self.level, self.knowledge)
@@ -207,6 +248,9 @@ class LevelLanguageTitle(AbsModel):
                              blank=False, verbose_name="Title:", help_text="Название.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='level_language_titles', related_query_name='level_language',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} - {1}".format(self.suffix, self.title)
@@ -224,6 +268,9 @@ class LevelLanguageKnowledge(AbsModel):
                              blank=False, verbose_name="Knowledge:", help_text="Знание.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='level_language_knowledges', related_query_name='level_language_knowledge',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0}".format(self.title)
@@ -243,6 +290,9 @@ class FrameworkProgramming(AbsModel):
                                  blank=False, verbose_name="Language:", help_text="Язык.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='frameworks', related_query_name='framework',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} ({1})".format(self.title, self.language)
@@ -257,6 +307,9 @@ class LanguageProgramming(AbsModel):
                              blank=False, verbose_name="Language:", help_text="Язык программирвоания.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='language_programmings', related_query_name='language_programming',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0}".format(self.title)
@@ -274,6 +327,9 @@ class SkillProgramming(AbsModel):
                              blank=False, verbose_name="Skills:", help_text="Навыки и умения.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='skill_programmings', related_query_name='skill_programming',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0}".format(self.title)
@@ -295,6 +351,9 @@ class IntervalWork(AbsModel):
                                  blank=False, verbose_name="Stop:", help_text="Завершение работы.")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='interval_works', related_query_name='interval_work',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} ({1} - {2})".format(self.title, self.timeFrom, self.timeTo)
@@ -319,12 +378,14 @@ class RateWork(AbsModel):
                                     blank=True, verbose_name="Price (RUB):", help_text="Цена (в рублях).")
     description = models.TextField(max_length=400, default="",
                                    blank=True, verbose_name="Description:", help_text="Описание.")
+    token = models.ForeignKey('Token', on_delete=models.PROTECT, null=True,
+                              related_name='rate_works', related_query_name='rate_work',
+                              blank=True, verbose_name="Token:", help_text="Токены.")
 
     def __str__(self):
         return "{0} : {1}<->{2} (${3} - RUB{4})".format(self.title, self.language, self.framework,
-                                           self.price_dollar, self.price_rub)
+                                                        self.price_dollar, self.price_rub)
 
     class Meta:
         verbose_name = "Цена работы"
         verbose_name_plural = "Цены работ"
-
