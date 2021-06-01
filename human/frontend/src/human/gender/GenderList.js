@@ -1,24 +1,21 @@
-import {
-  Link,
-  // useRouteMatch,
-} from "react-router-dom";
+import {Link,} from "react-router-dom";
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import GlobalState from "../Singleton"
 
+const gs = new GlobalState(0);
 
 function GenderList(effect, deps){
-    // let match = useRouteMatch();
     const [genders, setGenders]=useState([]);
     const [gender, setGender] = useState('');
     const [desc, setDesc] = useState('');
-    // const [request, setRequest] = useState();
     const [result, setResult] = useState();
     const [alert, setAlert] = useState(false);
-    const host = `https://human.cloudsockets.net`
+    const host = gs.getHost();
 
     const submit = e => {
         e.preventDefault()
-        fetch(`/api/v0.1/gender/`, {
+        fetch(`${host}/api/v0.1/gender/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: gender, description: desc })

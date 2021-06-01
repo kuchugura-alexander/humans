@@ -1,24 +1,15 @@
-import {
-  // BrowserRouter as Router,
-  // Switch,
-  // Route,
-  Link,
-  // useRouteMatch,
-  // useParams
-} from "react-router-dom";
-import React, {
-    // Component,
-    useState, useEffect} from 'react';
-// import axios from 'axios';
+import {Link,} from "react-router-dom";
+import React, { useState, useEffect} from 'react';
+import GlobalState from "../Singleton"
 
+const gs = new GlobalState(0);
 
 function HumanList(){
-    // let match = useRouteMatch();
     const [humans, setHumans]=useState([]);
     const [humans_count, setHumans_count]=useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
-    const host = `https://human.cloudsockets.net`
+    const host = gs.getHost();
 
     useEffect( () => {
               fetch(`${host}/api/v0.1/human/`, {

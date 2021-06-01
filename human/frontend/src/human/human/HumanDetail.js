@@ -1,16 +1,19 @@
 import {Link} from "react-router-dom";
 import React, {useState, useEffect} from 'react';
-// import axios from 'axios';
+import GlobalState from "../Singleton"
+
+const gs = new GlobalState(0);
+
 
 function HumanDetail({match}){
   const [human, setHuman]=useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const id = match.params.id
-  // const host = `https://human.cloudsockets.net`
+  const host = gs.getHost();
 
   useEffect( () => {
-      fetch(`/api/v0.1/human/${id}/`, {
+      fetch(`${host}/api/v0.1/human/${id}/`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -25,14 +28,6 @@ function HumanDetail({match}){
           setError(error);
         }
       )
-    // axios({
-    //   method: "GET",
-    //   url: `http://localhost:8000/api/v0.1/human/${id}/`
-    // }).then(response => {
-    //   setHuman(response.data);
-    //   // setCity(response.data.city)
-    //   // console.log(human)
-    // })
   }, [id])
 
   console.log(human)

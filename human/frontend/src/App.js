@@ -6,6 +6,10 @@ import HumanList from './human/human/HumanList'
 import HumanDetail from './human/human/HumanDetail'
 import GenderList from "./human/gender/GenderList";
 import GenderDetail from "./human/gender/GenderDetail";
+// import GlobalState from "../Singleton"
+
+// const gs = new GlobalState(0);
+
 
 // const HumanNotFind = () => (
 //   <div>
@@ -18,7 +22,10 @@ import GenderDetail from "./human/gender/GenderDetail";
 // and /schedule routes will match any pathname that starts
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
+// const host = gs.getHost();
+
 const Main = () => (
+
   // <main>
           <Switch>
             <Route exact path="/">
