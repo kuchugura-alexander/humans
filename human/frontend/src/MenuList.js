@@ -12,7 +12,7 @@ function MenuList(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  key="d">
+                    <tr  key="h">
                         <td>0</td>
                         <td>
                             <Link to="/human/" className="btn btn-primary">Humans</Link>
@@ -24,7 +24,19 @@ function MenuList(){
                         </td>
                         <td></td>
                     </tr>
-                </tbody>    
+                    <tr  key="g">
+                        <td>1</td>
+                        <td>
+                            <Link to="/gender/" className="btn btn-primary">Genders</Link>
+                        </td>
+                        <td>
+                            <Link to='/gender/'>
+                                <button type="button" className="btn btn-info">Desc</button>
+                            </Link>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     );

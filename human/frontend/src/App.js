@@ -22,7 +22,8 @@ const Main = () => (
   // <main>
           <Switch>
             <Route exact path="/">
-              <h1>HOME</h1>
+                <a href={`https://seven-scale.com`}><h1>Seven-Scale</h1></a>
+
             </Route>
             <Route path="/menu/" exact component={MenuList} />
             <Route path="/human/" exact component={HumanList} />
@@ -40,15 +41,11 @@ const Main = () => (
 // between routes.
 const Navigate = () => (
   // <header>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/menu/">Menu</Link></li>
-            <li><Link to="/human/">Humans</Link></li>
-            {/*<li><Link to="/createHuman">createHuman</Link></li>*/}
-            <li><Link to="/gender/">Genders</Link></li>
-          </ul>
-        </nav>
+    <nav className="nav nav-pills nav-justified">
+        <Link className="nav-item nav-link active" to="/">Home</Link>
+        <Link className="nav-item nav-link" to="/menu">Menu</Link>
+        <Link className="nav-item nav-link disabled" to="/humanCreate">HumanCreate</Link>
+    </nav>
   // </header>
 )
 

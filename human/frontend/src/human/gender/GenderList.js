@@ -11,7 +11,7 @@ function GenderList(effect, deps){
     const [genders, setGenders]=useState([]);
     const [gender, setGender] = useState('');
     const [desc, setDesc] = useState('');
-    const [request, setRequest] = useState();
+    // const [request, setRequest] = useState();
     const [result, setResult] = useState();
     const [alert, setAlert] = useState(false);
 
@@ -68,7 +68,7 @@ function GenderList(effect, deps){
                 <br /><br />
                 Description: <input onChange={d => setDesc(d.target.value)}/>
                 <br /><br />
-                <input type="submit" value="Add gender" onClick={() => setRequest(gender)}/>
+                <input type="submit" value="Add gender" onClick={() => setGender(gender)}/>
             </form>
         </div>
     )
