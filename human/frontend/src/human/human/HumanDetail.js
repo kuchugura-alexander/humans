@@ -9,7 +9,7 @@ function HumanDetail({match}){
   const [human, setHuman]=useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const id = match.params.id
+  const id = match.params.id;
   const host = gs.getHost();
 
   useEffect( () => {
@@ -28,7 +28,7 @@ function HumanDetail({match}){
           setError(error);
         }
       )
-  }, [id])
+  }, [id, host])
 
   console.log(human)
   // console.log(error)

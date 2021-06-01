@@ -33,8 +33,8 @@ function GenderList(effect, deps){
                     setGenders(response.data.results);
                 });
             setAlert(false);
-            }, [alert])
-            // console.log(genders);
+            }, [alert, host])
+    // console.log(genders);
 
     return (
         <div className="gender--list">

@@ -49,6 +49,54 @@ def human(request):
     return render(request, 'index.html', {})
 
 
+def humanCreate(request):
+    return render(request, 'index.html', {})
+
+
+def city(request):
+    return render(request, 'index.html', {})
+
+
+def country(request):
+    return render(request, 'index.html', {})
+
+
+def timezoneresidence(request):
+    return render(request, 'index.html', {})
+
+
+def levellanguage(request):
+    return render(request, 'index.html', {})
+
+
+def levellanguagetitle(request):
+    return render(request, 'index.html', {})
+
+
+def levellanguageknowledge(request):
+    return render(request, 'index.html', {})
+
+
+def languageprogramming(request):
+    return render(request, 'index.html', {})
+
+
+def frameworkprogramming(request):
+    return render(request, 'index.html', {})
+
+
+def skillprogramming(request):
+    return render(request, 'index.html', {})
+
+
+def intervalwork(request):
+    return render(request, 'index.html', {})
+
+
+def ratework(request):
+    return render(request, 'index.html', {})
+
+
 def gender_detail(request, id):
     return render(request, 'index.html', {id:id})
 
@@ -57,32 +105,95 @@ def human_detail(request, id):
     return render(request, 'index.html', {id:id})
 
 
-class HumanViewSet(viewsets.ModelViewSet):
+def city_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def country_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def timezoneresidence_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def levellanguage_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def levellanguagetitle_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def levellanguageknowledge_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def languageprogramming_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def frameworkprogramming_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def skillprogramming_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def intervalwork_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+def ratework_detail(request, id):
+    return render(request, 'index.html', {id:id})
+
+
+class HumanFirstSerializer(viewsets.ModelViewSet):
     queryset = Human.objects.all()
 #    serializer_class = HumanSerializer
     serializer_class = HumanFirstSerializer
     permission_classes = [permissions.AllowAny]
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    # def get_permissions(self):
-    #     """
-    #     Instantiates and returns the list of permissions that this view requires.
-    #     """
-    #     if self.action == 'list':
-    #         permission_classes = [permissions.AllowAny]
-    #     else:
-    #         permission_classes = [permissions.IsAdminUser]
-    #     return [permission() for permission in permission_classes]
 
     # def list(self, request):
     #     pass
+
+    def create(self, request):
+        return HttpResponse("Hello, world.")
+        # pass
+
+    # def retrieve(self, request, pk=None):
+    #     pass
+
+    def update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+        # pass
+
+    def partial_update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+        # pass
+
+    def destroy(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+        # pass
+
+
+class HumanCreateSerializer(viewsets.ModelViewSet):
+    queryset = Human.objects.all()
+    serializer_class = HumanSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request):
+        return HttpResponse("Hello, world.")
+        # pass
 
     # def create(self, request):
     #     return HttpResponse("Hello, world.")
         # pass
 
-    # def retrieve(self, request, pk=None):
-    #     pass
+    def retrieve(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+        # pass
 
     def update(self, request, pk=None):
         return HttpResponse("Hello, world.")

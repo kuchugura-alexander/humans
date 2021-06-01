@@ -8,7 +8,7 @@ const gs = new GlobalState(0);
 
 function GenderDetail({match}){
   const [genders, setGenders]=useState([]);
-  const id = match.params.id
+  const id = match.params.id;
   const host = gs.getHost();
 
   useEffect( () => {
@@ -18,7 +18,7 @@ function GenderDetail({match}){
     }).then(response => {
       setGenders(response.data);
     })
-  }, [id])
+  }, [id, host])
 // console.log(genders)
   return(
     <div>

@@ -28,15 +28,8 @@ function HumanList(){
               setError(error);
             }
           )
-            //
-            // axios({
-            //     method: "GET",
-            //     url: "http://localhost:8000/api/v0.1/human/"
-            //     }).then(response => {
-            //         setHumans(response.data.results);
-            //     })
-            }, [])
-            // console.log("--->>", humans);
+        }, [host])
+    // console.log("--->>", humans);
 
       if (error) {
       return <div>Ошибка: {error.message}</div>;
