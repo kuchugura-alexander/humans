@@ -26,6 +26,8 @@ router.register(r'ratework', views.RateWorkViewSet, basename="RateWork")
 urlpatterns = [
     path('', views.index),
     path('test/', views.test, name='test'),
+    path('gender', views.gender, name='gender'),
+    path('human', views.human, name='human'),
     path('gender/<int:id>', views.gender_detail, name='gender_detail'),
     path('human/<int:id>', views.human_detail, name='human_detail'),
 

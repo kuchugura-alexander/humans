@@ -10,7 +10,7 @@ from .serializers import (
     LanguageProgrammingSerializer, FrameworkProgrammingSerializer,
     SkillProgrammingSerializer, IntervalWorkSerializer,
     RateWorkSerializer,
-    HumanSerializer
+    HumanSerializer, HumanFirstSerializer
 )
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -41,17 +41,26 @@ def index(request):
     return render(request, 'index.html', {})
 
 
-def gender_detail(request, id):
+def gender(request):
     return render(request, 'index.html', {})
+
+
+def human(request):
+    return render(request, 'index.html', {})
+
+
+def gender_detail(request, id):
+    return render(request, 'index.html', {id:id})
 
 
 def human_detail(request, id):
-    return render(request, 'index.html', {})
+    return render(request, 'index.html', {id:id})
 
 
 class HumanViewSet(viewsets.ModelViewSet):
     queryset = Human.objects.all()
-    serializer_class = HumanSerializer
+#    serializer_class = HumanSerializer
+    serializer_class = HumanFirstSerializer
     permission_classes = [permissions.AllowAny]
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 

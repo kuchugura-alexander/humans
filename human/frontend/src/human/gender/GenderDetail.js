@@ -1,14 +1,16 @@
+import {Link} from "react-router-dom";
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 function GenderDetail({match}){
   const [genders, setGenders]=useState([]);
   const id = match.params.id
+  // const host = `https://human.cloudsockets.net`
 
   useEffect( () => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/api/v0.1/gender/${id}/`
+      url: `/api/v0.1/gender/${id}/`
     }).then(response => {
       setGenders(response.data);
     })
@@ -21,6 +23,9 @@ function GenderDetail({match}){
         <p>
         {genders.description}
         </p>
+        <Link className="btn btn-outline-info"
+              to={{pathname: `/gender/`,
+             fromDashboard: false}}>Return to GenderList.</Link>
     </div>
   )
 }

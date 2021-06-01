@@ -119,23 +119,22 @@ class HumanSerializer(serializers.HyperlinkedModelSerializer):
                   'interval_works', 'rate_works', ]
 
 
-# # class HumanMiniInfoSerializer(serializers.HyperlinkedModelSerializer):
-# class HumanSerializer(serializers.HyperlinkedModelSerializer):
-#     gender = GenderSerializer()
-#     city = CitySerializer()
-#     level_english = LevelLanguageSerializer()
-#     language_programming = LanguageProgrammingSerializer(read_only=True, many=True)
-#     framework_programming = FrameworkProgrammingSerializer(read_only=True, many=True)
-#     skills_programming = SkillProgrammingSerializer(read_only=True, many=True)
-#     interval_works = IntervalWorkSerializer(read_only=True, many=True)
-#     rate_works = RateWorkSerializer(read_only=True, many=True)
-#
-#     class Meta:
-#         model = Human
-#         fields = ['pk', 'pk', 'nickname', 'surname', 'name', 'middle_name', 'gender', 'city', 'level_english',
-#                   'language_programming', 'framework_programming', 'skills_programming',
-#                   'interval_works', 'rate_works', ]
+# class HumanMiniInfoSerializer(serializers.HyperlinkedModelSerializer):
+class HumanFirstSerializer(serializers.HyperlinkedModelSerializer):
+    gender = GenderSerializer()
+    city = CitySerializer()
+    level_english = LevelLanguageSerializer()
+    language_programming = LanguageProgrammingSerializer(read_only=True, many=True)
+    framework_programming = FrameworkProgrammingSerializer(read_only=True, many=True)
+    skills_programming = SkillProgrammingSerializer(read_only=True, many=True)
+    interval_works = IntervalWorkSerializer(read_only=True, many=True)
+    rate_works = RateWorkSerializer(read_only=True, many=True)
 
+    class Meta:
+        model = Human
+        fields = ['pk', 'pk', 'nickname', 'name', 'middle_name', 'gender', 'city', 'level_english',
+                  'language_programming', 'framework_programming', 'skills_programming',
+                  'interval_works', 'rate_works', ]
 
 #
 # class HumanSerializer(serializers.ModelSerializer):

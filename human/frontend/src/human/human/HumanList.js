@@ -18,10 +18,10 @@ function HumanList(){
     const [humans_count, setHumans_count]=useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
-
+    const host = `https://human.cloudsockets.net`
 
     useEffect( () => {
-              fetch(`http://localhost:8000/api/v0.1/human/`, {
+              fetch(`${host}/api/v0.1/human/`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })

@@ -183,6 +183,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
     ]
+#    'DEFAULT_AUTHENTICATION_CLASSES': (
+#        'rest_framework.authentication.TokenAuthentication',
+#        'rest_framework.authentication.SessionAuthentication',
+#    ),
 }
 
 
@@ -209,4 +213,8 @@ CORS_ORIGIN_WHITELIST = (
        # 'http://localhost:3000',
        'http://localhost:3000',
        'http://127.0.0.1:3000',
+       'http://127.0.0.1:8023',
+       'http://localhost:8023',
+       'http://192.168.100.22:8023',
+       'http://192.168.100.21:8023',
 )

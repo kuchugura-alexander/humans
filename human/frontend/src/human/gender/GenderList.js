@@ -14,10 +14,11 @@ function GenderList(effect, deps){
     // const [request, setRequest] = useState();
     const [result, setResult] = useState();
     const [alert, setAlert] = useState(false);
+    const host = `https://human.cloudsockets.net`
 
     const submit = e => {
         e.preventDefault()
-        fetch('http://localhost:8000/api/v0.1/gender/', {
+        fetch(`/api/v0.1/gender/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: gender, description: desc })
@@ -30,7 +31,7 @@ function GenderList(effect, deps){
     useEffect( () => {
             axios({
                 method: "GET",
-                url: "http://localhost:8000/api/v0.1/gender/"
+                url: `${host}/api/v0.1/gender/`
                 }).then(response => {
                     setGenders(response.data.results);
                 });
@@ -56,7 +57,7 @@ function GenderList(effect, deps){
                        <td>{g.description}</td>
                        <td>
                            <Link className="btn btn-outline-info"
-                                 to={{pathgender: `/gender/${g.pk}/`,
+                                 to={{pathname: `/gender/${g.pk}/`,
                                      fromDashboard: false}}>Info</Link>
                        </td>
                    </tr>)}

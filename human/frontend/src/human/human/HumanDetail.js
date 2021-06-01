@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import React, {useState, useEffect} from 'react';
 // import axios from 'axios';
 
@@ -6,9 +7,10 @@ function HumanDetail({match}){
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const id = match.params.id
+  // const host = `https://human.cloudsockets.net`
 
   useEffect( () => {
-      fetch(`http://localhost:8000/api/v0.1/human/${id}/`, {
+      fetch(`/api/v0.1/human/${id}/`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })
@@ -45,6 +47,10 @@ function HumanDetail({match}){
     } else {
     return (
       <div>
+        <Link className="btn btn-outline-info"
+              to={{pathname: `/human/`,
+             fromDashboard: false}}>Return to HumanList.</Link>
+
           <h1> Human: {human.nickname} </h1>
           <h2> {human.name} {human.middle_name} </h2>
           Gender : {human.gender.title}
@@ -101,6 +107,10 @@ function HumanDetail({match}){
           <br /><br />
           {/*Description: {human.description}*/}
           {/*<br />*/}
+
+        <Link className="btn btn-outline-info"
+              to={{pathname: `/human/`,
+             fromDashboard: false}}>Return to HumanList.</Link>
       </div>
 
     );

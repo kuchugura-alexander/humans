@@ -1,0 +1,9 @@
+#!/bin/sh
+sudo chown -Rv www-data:www-data ./human/core
+sudo chown -Rv www-data:www-data ./human/human
+sudo chown -Rv www-data:www-data ./human/media
+sudo chown -Rv www-data:www-data ./human/static
+sudo chown -Rv www-data:www-data ./human/db.sqlite3
+sudo chown -Rv www-data:www-data ./human/manage.py
+
+
