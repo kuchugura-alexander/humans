@@ -12,7 +12,7 @@ function MenuList(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  key="h">
+                    <tr  key="human">
                         <td>0</td>
                         <td>
                             <Link to="/human/" className="btn btn-primary">Humans</Link>
@@ -24,13 +24,37 @@ function MenuList(){
                         </td>
                         <td></td>
                     </tr>
-                    <tr  key="g">
+                    <tr  key="gender">
                         <td>1</td>
                         <td>
                             <Link to="/gender/" className="btn btn-primary">Genders</Link>
                         </td>
                         <td>
                             <Link to='/gender/'>
+                                <button type="button" className="btn btn-info">Desc</button>
+                            </Link>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr  key="city">
+                        <td>2</td>
+                        <td>
+                            <Link to="/city/" className="btn btn-primary">City</Link>
+                        </td>
+                        <td>
+                            <Link to='/city/'>
+                                <button type="button" className="btn btn-info">Desc</button>
+                            </Link>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr  key="country">
+                        <td>3</td>
+                        <td>
+                            <Link to="/country/" className="btn btn-primary">Countries</Link>
+                        </td>
+                        <td>
+                            <Link to='/country/'>
                                 <button type="button" className="btn btn-info">Desc</button>
                             </Link>
                         </td>

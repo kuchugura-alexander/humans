@@ -6,26 +6,13 @@ import HumanList from './human/human/HumanList'
 import HumanDetail from './human/human/HumanDetail'
 import GenderList from "./human/gender/GenderList";
 import GenderDetail from "./human/gender/GenderDetail";
-// import GlobalState from "../Singleton"
+import CountryDetail from "./human/country/CountryDetail";
+import CountryList from "./human/country/CountryList";
+import CityList from "./human/city/CityList";
+import CityDetail from "./human/city/CityDetail";
 
-// const gs = new GlobalState(0);
-
-
-// const HumanNotFind = () => (
-//   <div>
-//     <h1>Human Not Find!</h1>
-//   </div>
-// )
-
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
-// const host = gs.getHost();
 
 const Main = () => (
-
   // <main>
           <Switch>
             <Route exact path="/">
@@ -38,8 +25,12 @@ const Main = () => (
             {/*<Route path="/createHuman" exact component={HumansList} />*/}
             <Route path="/gender/" exact component={GenderList} />
             <Route path="/gender/:id" exact component={GenderDetail} />
-            {/*  <GenderCreate />*/}
-            {/*</Route>*/}
+            <Route path="/city/" exact component={CityList} />
+            <Route path="/city/:id" exact component={CityDetail} />
+            <Route path="/country/" exact component={CountryList} />
+            <Route path="/country/:id" exact component={CountryDetail} />
+            <Route path="/timezone/" exact component={CountryList} />
+            <Route path="/timezone/:id" exact component={CountryDetail} />
           </Switch>
   //  </main> 
 )

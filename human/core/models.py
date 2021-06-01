@@ -157,7 +157,7 @@ class Country(AbsModel):
     """
     Current country. (with TimeZone and Domen)
     """
-    domen = models.CharField(max_length=5, default="",
+    domen = models.CharField(max_length=5, default="", unique=True,
                              blank=False, verbose_name="Domen:", help_text="Домен.")
     title = models.CharField(max_length=50, default="",
                              blank=False, verbose_name="Country:", help_text="Страна.")
