@@ -17,6 +17,7 @@ from .models import Human, Gender, City, Country, TimeZoneResidence, \
 #         model = Group
 #         fields = ['pk', 'url', 'name']
 
+
 class GenderSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Gender

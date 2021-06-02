@@ -149,17 +149,17 @@ def ratework_detail(request, id):
     return render(request, 'index.html', {id:id})
 
 
-class HumanFirstSerializer(viewsets.ModelViewSet):
-    queryset = Human.objects.all()
-#    serializer_class = HumanSerializer
-    serializer_class = HumanFirstSerializer
+class AbsModelViewSet(viewsets.ModelViewSet):
+    """
+    Abstract model for all ModelViewSet.
+    """
     permission_classes = [permissions.AllowAny]
 
     # def list(self, request):
     #     pass
 
-    def create(self, request):
-        return HttpResponse("Hello, world.")
+    # def create(self, request):
+    #     return HttpResponse("Hello, world.")
         # pass
 
     # def retrieve(self, request, pk=None):
@@ -177,428 +177,88 @@ class HumanFirstSerializer(viewsets.ModelViewSet):
         return HttpResponse("Hello, world.")
         # pass
 
+    class Meta:
+        abstract = True
 
-class HumanCreateSerializer(viewsets.ModelViewSet):
+
+class HumanFirstSerializer(AbsModelViewSet):
     queryset = Human.objects.all()
-    serializer_class = HumanSerializer
-    permission_classes = [permissions.AllowAny]
+    serializer_class = HumanFirstSerializer
 
-    def list(self, request):
+    def create(self, request):
         return HttpResponse("Hello, world.")
         # pass
 
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
+
+class HumanCreateSerializer(AbsModelViewSet):
+    queryset = Human.objects.all()
+    serializer_class = HumanSerializer
+
+    def list(self, request):
+        return HttpResponse("Hello, world.")
         # pass
 
     def retrieve(self, request, pk=None):
         return HttpResponse("Hello, world.")
         # pass
 
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-
-class GenderViewSet(viewsets.ModelViewSet):
+class GenderViewSet(AbsModelViewSet):
     queryset = Gender.objects.all()
     serializer_class = GenderSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class CityViewSet(viewsets.ModelViewSet):
+class CityViewSet(AbsModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class CountryViewSet(viewsets.ModelViewSet):
+class CountryViewSet(AbsModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class TimeZoneResidenceViewSet(viewsets.ModelViewSet):
+class TimeZoneResidenceViewSet(AbsModelViewSet):
     queryset = TimeZoneResidence.objects.all()
     serializer_class = TimeZoneResidenceSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class LevelLanguageViewSet(viewsets.ModelViewSet):
+class LevelLanguageViewSet(AbsModelViewSet):
     queryset = LevelLanguage.objects.all()
     serializer_class = LevelLanguageSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class LevelLanguageTitleViewSet(viewsets.ModelViewSet):
+class LevelLanguageTitleViewSet(AbsModelViewSet):
     queryset = LevelLanguageTitle.objects.all()
     serializer_class = LevelLanguageTitleSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class LevelLanguageKnowledgeViewSet(viewsets.ModelViewSet):
+class LevelLanguageKnowledgeViewSet(AbsModelViewSet):
     queryset = LevelLanguageKnowledge.objects.all()
     serializer_class = LevelLanguageKnowledgeSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class LanguageProgrammingViewSet(viewsets.ModelViewSet):
+class LanguageProgrammingViewSet(AbsModelViewSet):
     queryset = LanguageProgramming.objects.all()
     serializer_class = LanguageProgrammingSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class FrameworkProgrammingViewSet(viewsets.ModelViewSet):
+class FrameworkProgrammingViewSet(AbsModelViewSet):
     queryset = FrameworkProgramming.objects.all()
     serializer_class = FrameworkProgrammingSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class SkillProgrammingViewSet(viewsets.ModelViewSet):
+class SkillProgrammingViewSet(AbsModelViewSet):
     queryset = SkillProgramming.objects.all()
     serializer_class = SkillProgrammingSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class InternalWorkViewSet(viewsets.ModelViewSet):
+class InternalWorkViewSet(AbsModelViewSet):
     queryset = IntervalWork.objects.all()
     serializer_class = IntervalWorkSerializer
-    permission_classes = [permissions.AllowAny]
-
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
 
 
-class RateWorkViewSet(viewsets.ModelViewSet):
+class RateWorkViewSet(AbsModelViewSet):
     queryset = RateWork.objects.all()
     serializer_class = RateWorkSerializer
-    permission_classes = [permissions.AllowAny]
 
-    # def list(self, request):
-    #     pass
-
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
-
-    # def retrieve(self, request, pk=None):
-    #     pass
-
-    def update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def partial_update(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def destroy(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
-
-
-# class UserViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows users to be viewed or edited.
-#     """
-#     queryset = User.objects.all().order_by('-date_joined')
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-#
-#
-# class GroupViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-
-# class HumanAllInfoListDetail(APIView):
-#     """
-#     Retrieve, update or delete a Human.
-#     """
-#     def get_object(self, pk):
-#         """
-#         Prepare before launch methods of the class.
-#         """
-#         try:
-#             return Human.objects.get(pk=pk)
-#         except Human.DoesNotExist:
-#             raise Http404
-#
-#     def get(self, request, pk, format=None):
-#         """
-#         Retrieve.
-#         """
-#         human = self.get_object(pk)
-#         serializer = HumanAllInfoSerializer(human)
-#         return Response(serializer.data)
-#
-#     def put(self, request, pk, format=None):
-#         """
-#         Create and Update.
-#         """
-#         human = self.get_object(pk)
-#         serializer = HumanAllInfoSerializer(human, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             # return Response(serializer.data)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     def delete(self, request, pk, format=None):
-#         """
-#         Delete.
-#         """
-#         human = self.get_object(pk)
-#         human.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
