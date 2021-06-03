@@ -8,6 +8,8 @@ function CityList(effect, deps){
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [timezone, setTimezone] = useState('');
+    const [countryNew, setCountryNew] = useState('');
+    const [timezoneNew, setTimezoneNew] = useState('');
     const [isLoadedCity, setIsLoadedCity] = useState(false);
     const [isLoadedCountry, setIsLoadedCountry] = useState(false);
     const [isLoadedTimezone, setIsLoadedTimezone] = useState(false);
@@ -25,12 +27,14 @@ function CityList(effect, deps){
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: city,
-                country: country,
-                timezone: timezone,})
+                country: countryNew,
+                timezone: timezoneNew,})
         })
         .then(res => res.json())
         .then(json => setResult(json.title))
         setAlert(true);
+        chCity();
+        chTzone();
     }
 
     useEffect( () => {
@@ -87,6 +91,31 @@ function CityList(effect, deps){
     console.log("country -> ", country);
     console.log("timezone -> ", timezone);
 
+    const changeCity = (event) => {
+        setCountryNew(event.target.value);
+  console.log(countryNew);
+}
+    const changeTimeZone = (event) => {
+  setTimezoneNew(event.target.value);
+  console.log(timezoneNew);
+}
+
+
+const chCity = () =>{
+                    var e = document.getElementById("chCi");
+                    var as = document.forms[0].ddlViewBy.value;
+                    var strUser = e.options[e.selectedIndex].value;
+                    console.log(as, strUser);
+
+}
+const chTzone =() =>{
+                    var e = document.getElementById("chTz");
+                    var as = document.forms[0].ddlViewBy.value;
+                    var strUser = e.options[e.selectedIndex].value;
+                    console.log(as, strUser);
+
+}
+
     if (errorCity) {
         return <div>ОшибкаCity: {errorCity.message} </div>;
     } else if (errorCountry) {
@@ -137,21 +166,18 @@ function CityList(effect, deps){
                 Title: <input />
                 <br /><br />
                 Country:
-                <select id="ddlViewBy" onSelect={() =>{
-                    var e = document.getElementById("ddlViewBy");
-                    var as = document.forms[0].ddlViewBy.value;
-                    var strUser = e.options[e.selectedIndex].value;
-                    console.log(as, strUser);}
-                }>
-                     {country.map( c  =>
-                      <option>{c.domen} - {c.title}</option>
-                     )}
+                <select id="chCi" onChange={changeCity}>
+                    {country.map( c  =>
+                        <option key={c.pk} value={c.pk}>{c.domen} - {c.title}</option>
+                    )}
+                }
                 </select>
                 <br /><br />
                 TimeZoneResidence:
-                <select>
+                <select id="chTz" onChange={changeTimeZone}>
+                    <option key="-1" value="-1">Null</option>
                      {timezone.map( t  =>
-                      <option>{t.timezone}</option>
+                      <option key={t.pk} value={t.pk}>{t.timezone}</option>
                      )}
                 </select>
                 <br /><br />
@@ -163,3 +189,4 @@ function CityList(effect, deps){
 }
 
 export default CityList;
+
