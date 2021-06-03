@@ -33,8 +33,6 @@ function CityList(effect, deps){
         .then(res => res.json())
         .then(json => setResult(json.title))
         setAlert(true);
-        chCity();
-        chTzone();
     }
 
     useEffect( () => {
