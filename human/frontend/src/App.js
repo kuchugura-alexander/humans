@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import MenuList from "./MenuList";
 import HumanList from './human/human/HumanList'
 import HumanDetail from './human/human/HumanDetail'
+import HumanCreate from './human/human/HumanCreate'
 import GenderList from "./human/gender/GenderList";
 import GenderDetail from "./human/gender/GenderDetail";
 import CountryDetail from "./human/country/CountryDetail";
@@ -22,7 +23,7 @@ const Main = () => (
             <Route path="/menu/" exact component={MenuList} />
             <Route path="/human/" exact component={HumanList} />
             <Route path="/human/:id" exact component={HumanDetail} />
-            {/*<Route path="/createHuman" exact component={HumansList} />*/}
+            <Route path="/humanCreate" exact component={HumanCreate} />
             <Route path="/gender/" exact component={GenderList} />
             <Route path="/gender/:id" exact component={GenderDetail} />
             <Route path="/city/" exact component={CityList} />
@@ -42,7 +43,8 @@ const Navigate = () => (
     <nav className="nav nav-pills nav-justified">
         <Link className="nav-item nav-link active" to="/">Home</Link>
         <Link className="nav-item nav-link" to="/menu">Menu</Link>
-        <Link className="nav-item nav-link disabled" to="/humanCreate">HumanCreate</Link>
+        <Link className="nav-item nav-link" to="/humanCreate">HumanCreate</Link>
+        {/*<Link className="nav-item nav-link disabled" to="/humanCreate">HumanCreate</Link>*/}
     </nav>
   // </header>
 )
