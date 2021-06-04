@@ -166,5 +166,11 @@ data/dat/.DS_Store
 
 
 static/
+<<<<<<< HEAD
 migrations/0*.py
 db.sqlite3
+=======
+node_modules/
+human/node_modules/
+human/frontend/node_modules/
+>>>>>>> develop
