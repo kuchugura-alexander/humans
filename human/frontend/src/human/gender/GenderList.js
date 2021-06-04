@@ -15,7 +15,7 @@ function GenderList(effect, deps){
 
     const submit = e => {
         e.preventDefault()
-        fetch(`${host}/api/v0.1/gender/`, {
+        fetch(`${host}/api/v0.1/genderCreate/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: gender, description: desc })

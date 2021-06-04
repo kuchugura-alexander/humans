@@ -2,27 +2,12 @@ from django.shortcuts import render
 # from django.http import HttpResponse
 # from django.contrib.auth.models import User, Group
 from rest_framework import permissions
-from .serializers import (
-    GenderSerializer,
-    CountrySerializer, TimeZoneResidenceSerializer,
-    CitySerializer, LevelLanguageTitleSerializer,
-    LevelLanguageKnowledgeSerializer, LevelLanguageSerializer,
-    LanguageProgrammingSerializer, FrameworkProgrammingSerializer,
-    SkillProgrammingSerializer, IntervalWorkSerializer,
-    RateWorkSerializer,
-    HumanSerializer, HumanFirstSerializer
-)
+from . import serializers
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
-from .models import (
-    Human, Gender,
-    City, Country, TimeZoneResidence,
-    LevelLanguage, LevelLanguageTitle, LevelLanguageKnowledge,
-    LanguageProgramming, FrameworkProgramming,
-    SkillProgramming, IntervalWork, RateWork
-)
+from . import models
 from rest_framework import status
 from django.http import Http404
 from rest_framework.views import APIView
@@ -149,116 +134,215 @@ def ratework_detail(request, id):
     return render(request, 'index.html', {id:id})
 
 
-class AbsModelViewSet(viewsets.ModelViewSet):
+class AbsModelViewNotAll(viewsets.ModelViewSet):
     """
-    Abstract model for all ModelViewSet.
+    Abstract model for all Access Denied ModelViewSet.
     """
     permission_classes = [permissions.AllowAny]
 
-    # def list(self, request):
-    #     pass
+    def list(self, request):
+        return HttpResponse("Hello, world.")
 
-    # def create(self, request):
-    #     return HttpResponse("Hello, world.")
-        # pass
+    def create(self, request):
+        return HttpResponse("Hello, world.")
 
-    # def retrieve(self, request, pk=None):
-    #     pass
+    def retrieve(self, request, pk=None):
+        return HttpResponse("Hello, world.")
 
     def update(self, request, pk=None):
         return HttpResponse("Hello, world.")
-        # pass
 
     def partial_update(self, request, pk=None):
         return HttpResponse("Hello, world.")
-        # pass
 
     def destroy(self, request, pk=None):
         return HttpResponse("Hello, world.")
-        # pass
 
     class Meta:
         abstract = True
 
 
-class HumanFirstSerializer(AbsModelViewSet):
-    queryset = Human.objects.all()
-    serializer_class = HumanFirstSerializer
+class AbsModelViewOnlyView(viewsets.ModelViewSet):
+    """
+    Abstract model for View ModelViewSet.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def create(self, request):
+        return HttpResponse("Hello, world.")
+
+    def update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    def partial_update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    def destroy(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    class Meta:
+        abstract = True
+
+
+class AbsModelViewOnlyCreate(viewsets.ModelViewSet):
+    """
+    Abstract model for Create ModelViewSet.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request):
+        return HttpResponse("Hello, world.")
+
+    def retrieve(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    def update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    def partial_update(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    def destroy(self, request, pk=None):
+        return HttpResponse("Hello, world.")
+
+    class Meta:
+        abstract = True
+
+# VIEW - on serializers.HyperlinkedModelSerializer
+
+
+class HumanView(AbsModelViewOnlyView):
+    queryset = models.Human.objects.all()
+    serializer_class = serializers.HumanViewSerializer
 
     def create(self, request):
         return HttpResponse("Hello, world.")
         # pass
 
 
-class HumanCreateSerializer(AbsModelViewSet):
-    queryset = Human.objects.all()
-    serializer_class = HumanSerializer
-
-    def list(self, request):
-        return HttpResponse("Hello, world.")
-        # pass
-
-    def retrieve(self, request, pk=None):
-        return HttpResponse("Hello, world.")
-        # pass
+class GenderView(AbsModelViewOnlyView):
+    queryset = models.Gender.objects.all()
+    serializer_class = serializers.GenderViewSerializer
 
 
-class GenderViewSet(AbsModelViewSet):
-    queryset = Gender.objects.all()
-    serializer_class = GenderSerializer
+class CityView(AbsModelViewOnlyView):
+    queryset = models.City.objects.all()
+    serializer_class = serializers.CityViewSerializer
 
 
-class CityViewSet(AbsModelViewSet):
-    queryset = City.objects.all()
-    serializer_class = CitySerializer
+class CountryView(AbsModelViewOnlyView):
+    queryset = models.Country.objects.all()
+    serializer_class = serializers.CountryViewSerializer
 
 
-class CountryViewSet(AbsModelViewSet):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
+class TimeZoneResidenceView(AbsModelViewOnlyView):
+    queryset = models.TimeZoneResidence.objects.all()
+    serializer_class = serializers.TimeZoneResidenceViewSerializer
 
 
-class TimeZoneResidenceViewSet(AbsModelViewSet):
-    queryset = TimeZoneResidence.objects.all()
-    serializer_class = TimeZoneResidenceSerializer
+class LevelLanguageView(AbsModelViewOnlyView):
+    queryset = models.LevelLanguage.objects.all()
+    serializer_class = serializers.LevelLanguageViewSerializer
 
 
-class LevelLanguageViewSet(AbsModelViewSet):
-    queryset = LevelLanguage.objects.all()
-    serializer_class = LevelLanguageSerializer
+class LevelLanguageTitleView(AbsModelViewOnlyView):
+    queryset = models.LevelLanguageTitle.objects.all()
+    serializer_class = serializers.LevelLanguageTitleViewSerializer
 
 
-class LevelLanguageTitleViewSet(AbsModelViewSet):
-    queryset = LevelLanguageTitle.objects.all()
-    serializer_class = LevelLanguageTitleSerializer
+class LevelLanguageKnowledgeView(AbsModelViewOnlyView):
+    queryset = models.LevelLanguageKnowledge.objects.all()
+    serializer_class = serializers.LevelLanguageKnowledgeViewSerializer
 
 
-class LevelLanguageKnowledgeViewSet(AbsModelViewSet):
-    queryset = LevelLanguageKnowledge.objects.all()
-    serializer_class = LevelLanguageKnowledgeSerializer
+class LanguageProgrammingView(AbsModelViewOnlyView):
+    queryset = models.LanguageProgramming.objects.all()
+    serializer_class = serializers.LanguageProgrammingViewSerializer
 
 
-class LanguageProgrammingViewSet(AbsModelViewSet):
-    queryset = LanguageProgramming.objects.all()
-    serializer_class = LanguageProgrammingSerializer
+class FrameworkProgrammingView(AbsModelViewOnlyView):
+    queryset = models.FrameworkProgramming.objects.all()
+    serializer_class = serializers.FrameworkProgrammingViewSerializer
 
 
-class FrameworkProgrammingViewSet(AbsModelViewSet):
-    queryset = FrameworkProgramming.objects.all()
-    serializer_class = FrameworkProgrammingSerializer
+class SkillProgrammingView(AbsModelViewOnlyView):
+    queryset = models.SkillProgramming.objects.all()
+    serializer_class = serializers.SkillProgrammingViewSerializer
 
 
-class SkillProgrammingViewSet(AbsModelViewSet):
-    queryset = SkillProgramming.objects.all()
-    serializer_class = SkillProgrammingSerializer
+class InternalWorkView(AbsModelViewOnlyView):
+    queryset = models.IntervalWork.objects.all()
+    serializer_class = serializers.IntervalWorkViewSerializer
 
 
-class InternalWorkViewSet(AbsModelViewSet):
-    queryset = IntervalWork.objects.all()
-    serializer_class = IntervalWorkSerializer
+class RateWorkView(AbsModelViewOnlyView):
+    queryset = models.RateWork.objects.all()
+    serializer_class = serializers.RateWorkViewSerializer
 
 
-class RateWorkViewSet(AbsModelViewSet):
-    queryset = RateWork.objects.all()
-    serializer_class = RateWorkSerializer
+# CREATE - on serializers.ModelSerializer
 
+
+class HumanCreate(AbsModelViewOnlyCreate):
+    queryset = models.Human.objects.all()
+    serializer_class = serializers.HumanCreateSerializer
+
+
+class GenderCreate(AbsModelViewOnlyCreate):
+    queryset = models.Gender.objects.all()
+    serializer_class = serializers.GenderCreateSerializer
+
+
+class CityCreate(AbsModelViewOnlyCreate):
+    queryset = models.City.objects.all()
+    serializer_class = serializers.CityCreateSerializer
+
+
+class CountryCreate(AbsModelViewOnlyCreate):
+    queryset = models.Country.objects.all()
+    serializer_class = serializers.CountryCreateSerializer
+
+
+class TimeZoneResidenceCreate(AbsModelViewOnlyCreate):
+    queryset = models.TimeZoneResidence.objects.all()
+    serializer_class = serializers.TimeZoneResidenceCreateSerializer
+
+
+class LevelLanguageCreate(AbsModelViewOnlyCreate):
+    queryset = models.LevelLanguage.objects.all()
+    serializer_class = serializers.LevelLanguageCreateSerializer
+
+
+class LevelLanguageTitleCreate(AbsModelViewOnlyCreate):
+    queryset = models.LevelLanguageTitle.objects.all()
+    serializer_class = serializers.LevelLanguageTitleCreateSerializer
+
+
+class LevelLanguageKnowledgeCreate(AbsModelViewOnlyCreate):
+    queryset = models.LevelLanguageKnowledge.objects.all()
+    serializer_class = serializers.LevelLanguageKnowledgeCreateSerializer
+
+
+class LanguageProgrammingCreate(AbsModelViewOnlyCreate):
+    queryset = models.LanguageProgramming.objects.all()
+    serializer_class = serializers.LanguageProgrammingCreateSerializer
+
+
+class FrameworkProgrammingCreate(AbsModelViewOnlyCreate):
+    queryset = models.FrameworkProgramming.objects.all()
+    serializer_class = serializers.FrameworkProgrammingCreateSerializer
+
+
+class SkillProgrammingCreate(AbsModelViewOnlyCreate):
+    queryset = models.SkillProgramming.objects.all()
+    serializer_class = serializers.SkillProgrammingCreateSerializer
+
+
+class InternalWorkCreate(AbsModelViewOnlyCreate):
+    queryset = models.IntervalWork.objects.all()
+    serializer_class = serializers.IntervalWorkCreateSerializer
+
+
+class RateWorkCreate(AbsModelViewOnlyCreate):
+    queryset = models.RateWork.objects.all()
+    serializer_class = serializers.RateWorkCreateSerializer
