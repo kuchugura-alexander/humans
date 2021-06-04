@@ -8,6 +8,7 @@ function CityList(effect, deps){
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
     const [timezone, setTimezone] = useState('');
+    const [cityNew, setCityNew] = useState('');
     const [countryNew, setCountryNew] = useState('');
     const [timezoneNew, setTimezoneNew] = useState('');
     const [isLoadedCity, setIsLoadedCity] = useState(false);
@@ -22,11 +23,12 @@ function CityList(effect, deps){
 
     const submit = e => {
         e.preventDefault()
-        fetch(`${host}/api/v0.1/city/`, {
+        console.log("===>", cityNew, countryNew, timezoneNew);
+        fetch(`${host}/api/v0.1/cityCreate/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                title: city,
+                title: cityNew,
                 country: countryNew,
                 timezone: timezoneNew,})
         })
@@ -60,6 +62,7 @@ function CityList(effect, deps){
             (result) => {
                 setIsLoadedCountry(true);
                 setCountry(result.results);
+                setCountryNew(result.results[0].pk)
             },
             (error) => {
                 setIsLoadedCountry(true);
@@ -75,13 +78,14 @@ function CityList(effect, deps){
             (result) => {
                 setIsLoadedTimezone(true);
                 setTimezone(result.results);
+                setTimezoneNew(result.results[0].pk)
             },
             (error) => {
                 setIsLoadedTimezone(true);
                 setErrorTimezone(error);
             }
         )
-
+        setAlert(false);
 
     }, [alert, host])
 
@@ -89,30 +93,19 @@ function CityList(effect, deps){
     console.log("country -> ", country);
     console.log("timezone -> ", timezone);
 
-    const changeCity = (event) => {
-        setCountryNew(event.target.value);
-  console.log(countryNew);
-}
-    const changeTimeZone = (event) => {
-  setTimezoneNew(event.target.value);
-  console.log(timezoneNew);
-}
 
-
-const chCity = () =>{
-                    var e = document.getElementById("chCi");
-                    var as = document.forms[0].ddlViewBy.value;
-                    var strUser = e.options[e.selectedIndex].value;
-                    console.log(as, strUser);
-
-}
-const chTzone =() =>{
-                    var e = document.getElementById("chTz");
-                    var as = document.forms[0].ddlViewBy.value;
-                    var strUser = e.options[e.selectedIndex].value;
-                    console.log(as, strUser);
-
-}
+    const handleChangeCity = (e) => {
+        setCityNew(e.target.value);
+        // console.log(e.target.value, e.label);
+    }
+    const handleChangeCountry = (e) => {
+        setCountryNew(e.target.value);
+        // console.log(e.target.value, e.label);
+    }
+    const handleChangeTimeZone = (e) => {
+        setTimezoneNew(e.target.value);
+        // console.log(e.target.value, e.label);
+    }
 
     if (errorCity) {
         return <div>ОшибкаCity: {errorCity.message} </div>;
@@ -161,25 +154,31 @@ const chTzone =() =>{
            </table>
             { result && <div> Result: <br /><h3> { result }</h3></div> }
             <form onSubmit={submit}>
-                Title: <input />
+                <label>
+                    Title: <input type="text" name="city" placeholder="Input you city" onChange={handleChangeCity}/>
+                </label>
                 <br /><br />
-                Country:
-                <select id="chCi" onChange={changeCity}>
-                    {country.map( c  =>
-                        <option key={c.pk} value={c.pk}>{c.domen} - {c.title}</option>
-                    )}
-                }
+                <label>
+                    Country:
+                    <select id="chCountry" value={countryNew} onChange={handleChangeCountry}>
+                        {country.map( c  =>
+                            <option key={c.pk} value={c.pk}>{c.pk} - {c.domen} - {c.title}</option>
+                        )}
+                    }
                 </select>
+                </label>
                 <br /><br />
-                TimeZoneResidence:
-                <select id="chTz" onChange={changeTimeZone}>
-                    <option key="-1" value="-1">Null</option>
-                     {timezone.map( t  =>
-                      <option key={t.pk} value={t.pk}>{t.timezone}</option>
-                     )}
-                </select>
+                <label>
+                    TimeZoneResidence:
+                    <select id="chTimezone" value={timezoneNew} onChange={handleChangeTimeZone}>
+                        {/*<option key="-1" value="-1">Null</option>*/}
+                         {timezone.map( t  =>
+                          <option key={t.pk} value={t.pk}>{t.timezone}</option>
+                         )}
+                    </select>
+                </label>
                 <br /><br />
-                <input type="submit" value="Add city" onClick={() => setCity(city)}/>
+                <input type="submit" value="Add city"/>
             </form>
         </div>
     )
@@ -188,3 +187,4 @@ const chTzone =() =>{
 
 export default CityList;
 
+// <input type="submit" value="Add city" onClick={() => setCity(city)}/>

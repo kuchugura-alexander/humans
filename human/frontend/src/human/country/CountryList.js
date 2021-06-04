@@ -15,7 +15,7 @@ function CountryList(effect, deps){
 
     const submit = e => {
         e.preventDefault()
-        fetch(`${host}/api/v0.1/country/`, {
+        fetch(`${host}/api/v0.1/countryCreate/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ domen: domen, title: country })

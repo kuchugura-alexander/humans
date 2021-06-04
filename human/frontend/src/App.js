@@ -23,7 +23,6 @@ const Main = () => (
             <Route path="/menu/" exact component={MenuList} />
             <Route path="/human/" exact component={HumanList} />
             <Route path="/human/:id" exact component={HumanDetail} />
-            <Route path="/humanCreate" exact component={HumanCreate} />
             <Route path="/gender/" exact component={GenderList} />
             <Route path="/gender/:id" exact component={GenderDetail} />
             <Route path="/city/" exact component={CityList} />
@@ -32,6 +31,7 @@ const Main = () => (
             <Route path="/country/:id" exact component={CountryDetail} />
             <Route path="/timezone/" exact component={CountryList} />
             <Route path="/timezone/:id" exact component={CountryDetail} />
+            <Route path="/humanCreate" exact component={HumanCreate} />
           </Switch>
   //  </main> 
 )
